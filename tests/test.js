@@ -1,4 +1,5 @@
-const { helloWorld } = require('../src/app');
+import app from '../src/app';
+const helloWorld = app.helloWorld;
 
 function testHelloWorld() {
     const result = helloWorld();

@@ -3,4 +3,4 @@ function helloWorld() {
     return "Hello, CI/CD World!";
 }
 
-module.exports = { helloWorld };
+export default { helloWorld };
