@@ -1,0 +1,59 @@
+name: CI/CD Pipeline
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # ÉTAPE 1 : BUILD
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+      
+      - name: Configuration de Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Installation des dépendances
+        run: npm install
+      
+      - name: Build de l'application
+        run: echo "🛠️ Compilation de l'application..."
+        # Ici, on pourrait compiler (ex: npm run build)
+
+  # ÉTAPE 2 : TEST
+  test:
+    runs-on: ubuntu-latest
+    needs: build  # Dépend de l'étape build
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+      
+      - name: Configuration de Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Installation des dépendances
+        run: npm install
+      
+      - name: Exécution des tests
+        run: echo "🧪 Exécution des tests..."
+        # Exemple : npm test
+
+  # ÉTAPE 3 : DEPLOY
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test  # Dépend de l'étape test
+    if: github.ref == 'refs/heads/main'  # Déploie seulement sur main
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+      
+      - name: Déploiement
+        run: echo "🚀 Déploiement de l'application..."
+        # Exemple : scp, rsync, kubectl, serverless deploy, etc.
